@@ -100,60 +100,18 @@ int gcd(int a, int b)
     return gcd(b % a, a);
 }
 
+void solve()
+{
+}
 int32_t main()
 {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    // ll t;
-    // cin >> t;
-    // while (t--)
-    // {
-    //     solve();
-    // }
-    // return 0;
-
-    // first make the map of powers of 2
-    map<ll, ll> ma, val;
-    ma[0] = 1ll;
-    for (ll i = 1ll; i < 30; i++)
+    ll t;
+    cin >> t;
+    while (t--)
     {
-        ma[i] = ma[i - 1ll] * 2ll;
-    }
-    // for (auto x : ma)
-    // {
-    //     cout << x.first << " " << x.second << '\n';
-    // }
-    ll n, a, b;
-    cin >> n;
-    for (ll i = 0; i < n; i++)
-    {
-        cin >> a >> b;
-        // cout<<n<<endl;
-        // cout<<a<<b<<endl;
-        if (a == 1)
-        {
-            val[ma[b]]++;
-        }
-        else
-        {
-
-            for (ll i = 30; i >= 0; i--)
-            {
-                if (b >= ma[i] and b != 0)
-                {
-                    if (val.count(ma[i]))
-                    {
-                        b -= min(b / ma[i], val[ma[i]]) * ma[i];
-                    }
-                }
-            }
-            if (b == 0)
-                cout << "YES" << endl;
-            else
-                cout << "NO" << endl;
-        }
-        if (i == n - 1)
-            return 0;
+        solve();
     }
     return 0;
 }

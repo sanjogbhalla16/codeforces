@@ -49,30 +49,7 @@ ll CountDiv(ll n)
     }
     return cnt;
 }
-void SieveOfE(ll n)
-{
-    ll cnt = 0;
-    vector<bool> prime(n + 1, true);
-    prime[0] = prime[1] = false;
-    for (int i = 1; i <= n; i++)
-    {
-        if (prime[i])
-        {
-            for (int j = 2 * i; j <= n; j += i)
-            {
-                prime[j] = 0;
-            }
-        }
-    }
-    for (int i = 2; i <= n; i++)
-    {
-        if (prime[i])
-        {
-            cout << i << " ";
-        }
-    }
-    cout << '\n';
-}
+
 bool isPerfectSquare(ll x)
 {
     // Find floating point value of
@@ -99,61 +76,67 @@ int gcd(int a, int b)
         return b;
     return gcd(b % a, a);
 }
-
+vector<ll> fp(1e6 + 1);
+void SieveOfE()
+{
+    ll cnt = 0;
+    vector<bool> prime(1e6 + 1, true);
+    prime[0] = prime[1] = false;
+    fp[0] = fp[1] = 1;
+    for (int i = 1; i <= 1e6; i++)
+    {
+        if (prime[i])
+        {
+            for (int j = 2 * i; j <= 1e6; j += i)
+            {
+                prime[j] = 0;
+            }
+        }
+    }
+    for (int i = 2; i <= 1e6; i++)
+    {
+        if (prime[i])
+        {
+            fp.push_back(i);
+        }
+    }
+}
+void solve()
+{
+    ll n;
+    cin >> n;
+    map<ll, ll> mpp;
+    for (int i = 0; i < n; i++)
+    {
+        ll x;
+        cin >> x;
+        while (x > 1)
+        {
+            mpp[fp[x]]++;
+            x /= fp[x];
+        }
+    }
+    string ans = "YES";
+    for (auto &a : mpp)
+    {
+        if (a.second % n)
+        {
+            ans = "NO";
+            break;
+        }
+    }
+    cout << ans << '\n';
+}
 int32_t main()
 {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    // ll t;
-    // cin >> t;
-    // while (t--)
-    // {
-    //     solve();
-    // }
-    // return 0;
-
-    // first make the map of powers of 2
-    map<ll, ll> ma, val;
-    ma[0] = 1ll;
-    for (ll i = 1ll; i < 30; i++)
+    SieveOfE();
+    ll t;
+    cin >> t;
+    while (t--)
     {
-        ma[i] = ma[i - 1ll] * 2ll;
-    }
-    // for (auto x : ma)
-    // {
-    //     cout << x.first << " " << x.second << '\n';
-    // }
-    ll n, a, b;
-    cin >> n;
-    for (ll i = 0; i < n; i++)
-    {
-        cin >> a >> b;
-        // cout<<n<<endl;
-        // cout<<a<<b<<endl;
-        if (a == 1)
-        {
-            val[ma[b]]++;
-        }
-        else
-        {
-
-            for (ll i = 30; i >= 0; i--)
-            {
-                if (b >= ma[i] and b != 0)
-                {
-                    if (val.count(ma[i]))
-                    {
-                        b -= min(b / ma[i], val[ma[i]]) * ma[i];
-                    }
-                }
-            }
-            if (b == 0)
-                cout << "YES" << endl;
-            else
-                cout << "NO" << endl;
-        }
-        if (i == n - 1)
-            return 0;
+        solve();
     }
     return 0;
 }
