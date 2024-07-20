@@ -108,12 +108,45 @@ void solve()
     // tune yeh Jee mai bhi kiya , yahan bhi vahi kar raha hai
     // leken yeh khatam karna padegi aadat tabhi kuch ho paega life mai
     // dsa is not same as CP so do both leetcode and codeforces
-    ll n, m, k;
-    cin >> n >> m >> k;
-    int dest = n + 1;
-    int cnt = -1;
-    string river;
-    cin >> river;
+    ll n;
+    string s;
+    cin >> n >> s;
+    int allowed = n - 2;
+    int i = 0, j = n - 1;
+    int ans = INT_MAX;
+    for (int i = 0; i < n - 1; i++)
+    {
+        int num = (s[i] - '0') * 10 + (s[i + 1] - '0');
+        // cout << num << '\n';
+        int sum = 0;
+        // 1 will be ignored as it is multiplied
+        for (int j = 0; j < i; j++)
+        {
+            if (s[j] == '0')
+            {
+                cout << '0' << '\n';
+                return;
+            }
+            if (s[j] >= '2')
+                sum += s[j] - '0';
+        }
+        for (int j = i + 2; j < n; j++)
+        {
+            if (s[j] == '0')
+            {
+                cout << '0' << '\n';
+                return;
+            }
+            if (s[j] >= '2')
+                sum += s[j] - '0';
+        }
+        if (num == 1 && sum > 0)
+            num = sum;
+        else
+            num += sum;
+        ans = min(ans, num);
+    }
+    cout << ans << '\n';
 }
 int32_t main()
 {
